@@ -61,11 +61,11 @@
                 } else {
                     const finalNumber = Math.floor(Math.random() * (max - min + 1)) + min;
                     display.innerText = finalNumber;
-                    typeText("Rolling...", finalNumber);
+                    typeText(`The number you rolled is ${finalNumber}!`);
                 }
             }
 
-            function typeText(text, finalNumber) {
+            function typeText(text) {
                 display.innerText = "";
                 let i = 0;
 
@@ -74,8 +74,6 @@
                         display.innerText += text.charAt(i);
                         i++;
                         setTimeout(typeCharacter, typingSpeed);
-                    } else {
-                        display.innerText += ` ${finalNumber}`;
                     }
                 }
 
