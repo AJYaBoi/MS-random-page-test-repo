@@ -45,6 +45,7 @@
             const max = 100; // Maximum number
             const interval = 50; // Time between updates in ms
             const duration = 2000; // Total duration of rolling animation in ms
+            const typingSpeed = 100; // Speed of typing animation in ms per character
 
             const display = document.getElementById('randomNumber');
             let startTime = null;
@@ -60,7 +61,25 @@
                 } else {
                     const finalNumber = Math.floor(Math.random() * (max - min + 1)) + min;
                     display.innerText = finalNumber;
+                    typeText("Rolling...", finalNumber);
                 }
+            }
+
+            function typeText(text, finalNumber) {
+                display.innerText = "";
+                let i = 0;
+
+                function typeCharacter() {
+                    if (i < text.length) {
+                        display.innerText += text.charAt(i);
+                        i++;
+                        setTimeout(typeCharacter, typingSpeed);
+                    } else {
+                        display.innerText += ` ${finalNumber}`;
+                    }
+                }
+
+                typeCharacter();
             }
 
             requestAnimationFrame(updateNumber);
