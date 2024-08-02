@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +27,11 @@
             font-size: 3em;
             margin: 20px 0;
             color: #333;
+            transition: transform 0.5s ease-in-out;
+        }
+        .number-display.bigger {
+            transform: scale(2);
+            color: #ff0000;
         }
         button {
             padding: 10px 20px;
@@ -39,13 +46,13 @@
             background-color: #0056b3;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
         function rollRandomNumber() {
             const min = 1; // Minimum number
             const max = 100; // Maximum number
             const interval = 50; // Time between updates in ms
             const duration = 2000; // Total duration of rolling animation in ms
-            const typingSpeed = 100; // Speed of typing animation in ms per character
 
             const display = document.getElementById('randomNumber');
             let startTime = null;
@@ -60,27 +67,21 @@
                     requestAnimationFrame(updateNumber);
                 } else {
                     const finalNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-                    typeText("The number you rolled is ", finalNumber);
+                    display.innerText = finalNumber;
+                    display.classList.add('bigger');
+                    triggerConfetti();
                 }
             }
 
-            function typeText(text, finalNumber) {
-                display.innerText = "";
-                let i = 0;
-
-                function typeCharacter() {
-                    if (i < text.length) {
-                        display.innerText += text.charAt(i);
-                        i++;
-                        setTimeout(typeCharacter, typingSpeed);
-                    } else {
-                        display.innerText += finalNumber;
-                    }
-                }
-
-                typeCharacter();
+            function triggerConfetti() {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
             }
 
+            display.classList.remove('bigger');
             requestAnimationFrame(updateNumber);
         }
     </script>
