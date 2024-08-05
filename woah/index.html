@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rolling Numbers Animation</title>
+    <title>Bouncing and Spinning Numbers</title>
     <style>
         body {
             overflow: hidden;
@@ -14,16 +14,41 @@
             position: absolute;
             font-size: 1.5em;
             color: #fff;
-            animation: fly 10s linear infinite;
+            animation: bounce 5s infinite, spin 1s infinite linear;
         }
-        @keyframes fly {
+        @keyframes bounce {
             0% {
-                top: 100vh;
-                left: calc(var(--left-pos, 0) * 1%);
+                top: var(--start-y);
+                left: var(--start-x);
+                transform: translate(0, 0);
+            }
+            25% {
+                top: var(--mid-y);
+                left: var(--mid-x);
+                transform: translate(0, 0);
+            }
+            50% {
+                top: var(--end-y);
+                left: var(--end-x);
+                transform: translate(0, 0);
+            }
+            75% {
+                top: var(--mid-y);
+                left: var(--mid-x);
+                transform: translate(0, 0);
             }
             100% {
-                top: -10vh;
-                left: calc(var(--left-pos, 0) * 1%);
+                top: var(--start-y);
+                left: var(--start-x);
+                transform: translate(0, 0);
+            }
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
             }
         }
     </style>
@@ -33,10 +58,19 @@
         const numberOfElements = 1000;
         const body = document.body;
 
+        function randomPercentage() {
+            return Math.random() * 100 + '%';
+        }
+
         for (let i = 0; i < numberOfElements; i++) {
             const numberElement = document.createElement('div');
             numberElement.className = 'number';
-            numberElement.style.setProperty('--left-pos', Math.random() * 100);
+            numberElement.style.setProperty('--start-x', randomPercentage());
+            numberElement.style.setProperty('--start-y', randomPercentage());
+            numberElement.style.setProperty('--mid-x', randomPercentage());
+            numberElement.style.setProperty('--mid-y', randomPercentage());
+            numberElement.style.setProperty('--end-x', randomPercentage());
+            numberElement.style.setProperty('--end-y', randomPercentage());
             body.appendChild(numberElement);
 
             function updateNumber() {
