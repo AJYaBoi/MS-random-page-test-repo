@@ -12,48 +12,40 @@
         }
         .number {
             position: absolute;
-            font-size: 2em;
+            font-size: 1.5em;
             color: #fff;
-            animation: roll 5s linear infinite, fly 10s linear infinite;
-        }
-        @keyframes roll {
-            0% {
-                content: attr(data-number);
-            }
-            100% {
-                content: attr(data-number);
-            }
+            animation: fly 10s linear infinite;
         }
         @keyframes fly {
             0% {
                 top: 100vh;
-                left: 0;
-            }
-            50% {
-                top: 0;
-                left: 100vw;
+                left: calc(var(--left-pos, 0) * 1%);
             }
             100% {
-                top: 100vh;
-                left: 0;
+                top: -10vh;
+                left: calc(var(--left-pos, 0) * 1%);
             }
         }
     </style>
 </head>
 <body>
-    <div class="number" id="rollingNumber" data-number="0"></div>
-
     <script>
-        const numberElement = document.getElementById('rollingNumber');
-        let currentNumber = 0;
+        const numberOfElements = 1000;
+        const body = document.body;
 
-        function updateNumber() {
-            currentNumber = Math.floor(Math.random() * 100) + 1;
-            numberElement.setAttribute('data-number', currentNumber);
-            numberElement.textContent = currentNumber;
+        for (let i = 0; i < numberOfElements; i++) {
+            const numberElement = document.createElement('div');
+            numberElement.className = 'number';
+            numberElement.style.setProperty('--left-pos', Math.random() * 100);
+            body.appendChild(numberElement);
+
+            function updateNumber() {
+                numberElement.textContent = Math.floor(Math.random() * 100) + 1;
+            }
+
+            setInterval(updateNumber, 100);
+            updateNumber(); // Initial call to set the number
         }
-
-        setInterval(updateNumber, 100); // Update number every 100ms
     </script>
 </body>
 </html>
