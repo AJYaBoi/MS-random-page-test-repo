@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolling Numbers Animation</title>
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+            background-color: #000;
+        }
+        .number {
+            position: absolute;
+            font-size: 2em;
+            color: #fff;
+            animation: roll 5s linear infinite, fly 10s linear infinite;
+        }
+        @keyframes roll {
+            0% {
+                content: attr(data-number);
+            }
+            100% {
+                content: attr(data-number);
+            }
+        }
+        @keyframes fly {
+            0% {
+                top: 100vh;
+                left: 0;
+            }
+            50% {
+                top: 0;
+                left: 100vw;
+            }
+            100% {
+                top: 100vh;
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="number" id="rollingNumber" data-number="0"></div>
+
+    <script>
+        const numberElement = document.getElementById('rollingNumber');
+        let currentNumber = 0;
+
+        function updateNumber() {
+            currentNumber = Math.floor(Math.random() * 100) + 1;
+            numberElement.setAttribute('data-number', currentNumber);
+            numberElement.textContent = currentNumber;
+        }
+
+        setInterval(updateNumber, 100); // Update number every 100ms
+    </script>
+</body>
+</html>
